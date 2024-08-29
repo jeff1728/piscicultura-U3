@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes y Pedidos</title>
+    <link rel="stylesheet" href="css/style-peces.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="menu-icon" id="menu-icon">
+            &#9776;
+        </div>
+        <div class="logo">
+            <a href="principal.html">BeastComplay</a>
+        </div>
+        <div class="header-right">
+            <a style="color: #4CAF50;" href="login.html">Iniciar Sesión</a>
+            <a style="color: #4CAF50;" href="#">Registrarse</a>
+        </div>
+    </header>
+
+    <div class="side-menu" id="side-menu">
+        <a href="index.html">Inicio</a>
+        <a href="#">Nosotros</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contacto</a>
+    </div>
+    
+    <h2>Agregar Nuevo Pedido</h2>
+    <form id="pedido-form">
+        <label for="cliente_id">ID Cliente:</label>
+        <input type="text" id="cliente_id" name="cliente_id" required>
+
+        <label for="estanque_id">ID Estanque:</label>
+        <input type="text" id="estanque_id" name="estanque_id" required>
+
+        <label for="fecha_pedido">Fecha de Pedido:</label>
+        <input type="date" id="fecha_pedido" name="fecha_pedido" required>
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad" name="cantidad" required>
+
+        <label for="precio">Precio:</label>
+        <input type="number" step="0.01" id="precio" name="precio" required>
+
+        <button type="submit">Agregar Pedido</button>
+    </form>
+    <h1>Lista de Clientes</h1>
+    <ul id="clientes-list"></ul>
+
+    <h2>Historial de Pedidos</h2>
+    <ul id="pedidos-list"></ul>
+
+    <footer class="footer">
+        <div class="footer-section logo-section">
+            <img style="width: 150px; height: 150px;"  src="img/pesca_logo-removebg-preview.png" alt="Logo de BeastComplay">
+        </div>
+        <div class="footer-section info-section">
+            <p>Dirección: Quito, Ecuador</p>
+            <p>Teléfono: 0939429432</p>
+            <p>Correo: beastcomplay@gmail.com</p>
+            <div class="social-media">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-square-x-twitter"></i>
+            </div>
+        </div>
+        <div class="footer-politicas">
+            <a  href="#">Políticas de Privacidad</a>
+            
+            <a  href="#">Términos de Servicio</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+
+
+    <script src="javascript/script-general.js"></script>
+    <script>
+        async function fetchClientes() {
+            try {
+                const response = await fetch('/api/clientes');
+                const clientes = await response.json();
+                displayClientes(clientes);
+            } catch (error) {
+                console.error('Error al obtener los clientes:', error);
+            }
+        }
+
+        function displayClientes(clientes) {
+            const list = document.getElementById('clientes-list');
+            list.innerHTML = ''; // Limpiar la lista antes de agregar nuevos elementos
+
+            clientes.forEach(cliente => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${cliente.nombre} - ${cliente.direccion} - ${cliente.email} - ${cliente.telefono}`;
+                listItem.addEventListener('click', () => fetchPedidos(cliente.id_cliente));
+                list.appendChild(listItem);
+            });
+        }
+
+        async function fetchPedidos(cliente_id) {
+            try {
+                const response = await fetch(`/api/clientes/${cliente_id}/pedidos`);
+                const pedidos = await response.json();
+                displayPedidos(pedidos);
+            } catch (error) {
+                console.error('Error al obtener los pedidos:', error);
+            }
+        }
+
+        async function fetchPedidos() {
+    try {
+        const response = await fetch('/api/pedidos');
+        const pedidos = await response.json();
+        const list = document.getElementById('pedidos-list');
+        list.innerHTML = ''; // Limpia la lista antes de actualizarla
+        pedidos.forEach(pedido => {
+            const listItem = document.createElement('li');
+            listItem.textContent = JSON.stringify(pedido);
+            list.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error al obtener los pedidos:', error);
+    }
+}
+
+        document.getElementById('pedido-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cliente_id = document.getElementById('cliente_id').value;
+            const estanque_id = document.getElementById('estanque_id').value;
+            const fecha_pedido = document.getElementById('fecha_pedido').value;
+            const cantidad = document.getElementById('cantidad').value;
+            const precio = document.getElementById('precio').value;
+
+            try {
+                const response = await fetch('/api/pedidos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ cliente_id, estanque_id, fecha_pedido, cantidad, precio })
+                });
+                if (response.ok) {
+                    const result = await response.json();
+                    alert('Pedido agregado: ' + JSON.stringify(result));
+                    fetchPedidos(cliente_id); // Actualiza la lista de pedidos después de agregar un nuevo pedido
+                } else {
+                    const errorText = await response.text();
+                    alert('Error: ' + errorText);
+                }
+            } catch (error) {
+                console.error('Error al agregar el pedido:', error);
+            }
+        });
+
+        fetchClientes(); // Cargar la lista de clientes al cargar la página
+    </script>
+</body>
+</html>

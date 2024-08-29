@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualización de Peces</title>
+    <link rel="stylesheet" href="css/style-peces.css">      
+</head>
+<body>
+    <header class="header">
+        <div class="menu-icon" id="menu-icon">
+            &#9776;
+        </div>
+        <div class="logo">
+            <a href="principal.html">BeastComplay</a>
+        </div>
+        <div class="header-right">
+            <a style="color: #4CAF50;" href="login.html">Iniciar Sesión</a>
+            <a style="color: #4CAF50;" href="#">Registrarse</a>
+        </div>
+    </header>
+
+    <div class="side-menu" id="side-menu">
+        <a href="index.html">Inicio</a>
+        <a href="#">Nosotros</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contacto</a>
+    </div>
+
+
+    <h1 style="color: #4CAF50;">Lista de Peces</h1>
+    <div class="image-container">
+        <img src="https://img.freepik.com/foto-gratis/lindo-pez-agua_23-2150699455.jpg?t=st=1724729931~exp=1724733531~hmac=c76e53b73b9797677eab1e6d15c9a19b595f808f299712e5747b0a9b68ed0b7f&w=1380" alt="" style="height: 600px; width: 100%; opacity: 1; filter: grayscale(0.5) contrast(0.5) brightness(0.5);"> <!-- Agregué la opacidad de color negro -->
+        <p class="text-over-image" style="color: #ffffff;">Contamos con una gran variedad de especies en los estanques dentro de nuestras instalaciones, en el cuadro de abajo podrás escribir y ver en tiempo real cuales son los tipos de peces que existen en nuestro inventario en tiempo real.</p>
+      </div>
+    <h2>Ingresa el nombre del pez que deseas buscar</h2>
+    <input type="text" id="search" placeholder="Buscar por nombre...">
+    <ul id="peces-list"></ul>
+
+    <footer class="footer">
+        <div class="footer-section logo-section">
+            <img style="width: 150px; height: 150px;"  src="img/pesca_logo-removebg-preview.png" alt="Logo de BeastComplay">
+        </div>
+        <div class="footer-section info-section">
+            <p>Dirección: Quito, Ecuador</p>
+            <p>Teléfono: 0939429432</p>
+            <p>Correo: beastcomplay@gmail.com</p>
+            <div class="social-media">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-square-x-twitter"></i>
+            </div>
+        </div>
+        <div class="footer-politicas">
+            <a  href="#">Políticas de Privacidad</a>
+            
+            <a  href="#">Términos de Servicio</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+
+    <script src="javascript/script-general.js"></script>
+    <script>
+        async function fetchPeces() {
+            try {
+                const response = await fetch('/api/peces');
+                const peces = await response.json();
+                displayPeces(peces);
+            } catch (error) {
+                console.error('Error al obtener los peces:', error);
+            }
+        }
+
+        function displayPeces(peces) {
+            const list = document.getElementById('peces-list');
+            list.innerHTML = ''; // Limpiar la lista antes de agregar nuevos elementos
+
+            peces.forEach(pez => {
+                const listItem = document.createElement('li');
+                listItem.textContent = `${pez.nombre} - ${pez.informacion}`;
+                list.appendChild(listItem);
+            });
+        }
+
+        document.getElementById('search').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const listItems = document.querySelectorAll('#peces-list li');
+
+            listItems.forEach(item => {
+                if (item.textContent.toLowerCase().includes(searchTerm)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        fetchPeces(); // Cargar la lista de peces al cargar la página
+    </script>
+</body>
+</html>

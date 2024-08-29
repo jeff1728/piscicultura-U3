@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consulta PostgreSQL</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <h1>Datos de PostgreSQL</h1>
+  <ul id="data-list"></ul>
+
+  <h2>Actualizar Nombre del Cliente</h2>
+  <form id="update-form">
+    <label for="id_cliente">ID Cliente:</label>
+    <input type="text" id="id_cliente" name="id_cliente" required>
+    <label for="nuevo_nombre">Nuevo Nombre:</label>
+    <input type="text" id="nuevo_nombre" name="nuevo_nombre" required>
+    <button type="submit">Actualizar</button>
+  </form>
+
+  <script>
+    async function fetchData() {
+      try {
+        const response = await fetch('/api/data');
+        const data = await response.json();
+        const list = document.getElementById('data-list');
+        data.forEach(item => {
+          const listItem = document.createElement('li');
+          listItem.textContent = JSON.stringify(item);
+          list.appendChild(listItem);
+        });
+      } catch (error) {
+        console.error('Error al obtener datos:', error);
+      }
+    }
+
+    document.getElementById('update-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id_cliente = document.getElementById('id_cliente').value;
+      const nuevo_nombre = document.getElementById('nuevo_nombre').value;
+
+      try {
+        const response = await fetch('/api/update', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ id_cliente, nuevo_nombre })
+        });
+        if (response.ok) {
+          const result = await response.json();
+          alert('Cliente actualizado: ' + JSON.stringify(result));
+          fetchData(); // Actualiza la lista después de la actualización
+        } else {
+          const errorText = await response.text();
+          alert('Error: ' + errorText);
+        }
+      } catch (error) {
+        console.error('Error al actualizar:', error);
+      }
+    });
+
+    fetchData();
+  </script>
+</body>
+</html>
