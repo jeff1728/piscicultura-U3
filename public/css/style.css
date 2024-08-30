@@ -55,6 +55,7 @@ body, html {
     position: relative;
     overflow: hidden;
     margin-bottom: 30px;
+    
 }
 
 .form input {
@@ -76,6 +77,7 @@ body, html {
     height: 100%;
     pointer-events: none;
     border-bottom: 1px solid #c7c7c7;
+    padding-bottom: 30px;
 }
 
 .form .lbl-nombre:after {
@@ -103,6 +105,7 @@ body, html {
     transform: translateY(-150%);
     font-size: 14px;
     color: #4CAF50;
+    
 }
 
 .form input:focus + .lbl-nombre:after,
