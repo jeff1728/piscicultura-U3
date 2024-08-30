@@ -1,0 +1,103 @@
+/* Estilos generales */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; 
+    padding: 0;
+    color: #333;
+    font-size: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: linear-gradient(to right, #9ccc9c, #ffffff);
+    color: #86c588;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo a {
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #3ba355;
+}
+
+.logo1 {
+    font-size: 16px;
+}
+
+.logo1 a {
+    text-decoration: none;
+    color: #3ba355;
+    padding: 10px 20px;
+    border: 2px solid #3ba355;
+    border-radius: 5px;
+}
+
+.logo1 a:hover {
+    background-color: #3ba355;
+    color: white;
+}
+
+
+.intro {
+    padding: 20px;
+    text-align: center;
+    background: white;
+    color: #26733a;
+}
+
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    align-items: center;
+    background: linear-gradient(to right, #5f9962, #26733a);
+    padding: 20px 10px;
+    gap: 20px;
+}
+
+.feature-box {
+    background-color: transparent;
+    border: 2px solid white;
+    padding: 20px;
+    color: white;
+    text-align: center;
+    width: 300px;
+    transition: all 0.3s ease;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.feature-box:hover {
+    border-color: #fff;
+    transform: scale(1.05);
+}
+
+.vista-content {
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #f1f1f1;
+}
+
+#viewsTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#viewsTable th, #viewsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#viewsTable th {
+    background-color: #26733a;
+    color: white;
+}

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador de Vistas</title>
+    <link rel="stylesheet" href="css/style-admin.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo"><a href="administrador-vistas.html">Beast Complay</a></div>
+        <div class="logo1"><a href="login.html">Cerrar Sesión</a></div>
+    </div>
+    
+    <div class="intro">
+        <h2>Observación de contenido:</h2>
+    </div>
+
+    <div class="features">
+        <div class="feature-box" onclick="loadViews('vista_peces', 'Cosecha')">
+            <p>Vista Peces - Cosecha</p>
+        </div>
+        <div class="feature-box" onclick="loadViews('vista_trabajadores_asignaciones', 'Cosecha')">
+            <p>Vista Trabajadores Asignaciones - Cosecha</p>
+        </div>
+        <div class="feature-box" onclick="loadViews('vista_estanques_operaciones', 'Cosecha')">
+            <p>Vista Estanques Operaciones - Cosecha</p>
+        </div>
+        
+        <div class="feature-box" onclick="loadViews('vista_detalle_ventas', 'Comercializacion')">
+            <p>Vista Detalle Ventas - Comercialización</p>
+        </div>
+        <div class="feature-box" onclick="loadViews('vista_clientes_pedidos', 'Comercializacion')">
+            <p>Vista Clientes Pedidos - Comercialización</p>
+        </div>
+        <div class="feature-box" onclick="loadViews('vista_facturas_detalles', 'Comercializacion')">
+            <p>Vista Facturas Detalles - Comercialización</p>
+        </div>
+    </div>
+
+    <div id="vista-content" class="vista-content">
+        <table id="viewsTable">
+            <thead>
+                <tr></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        function loadViews(viewType, schema) {
+            fetch(`/api/views?type=${viewType}&schema=${schema}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.querySelector('#viewsTable tbody');
+                    tableBody.innerHTML = ''; // Limpiar la tabla antes de cargar nuevos datos
+        
+                    if (data.length > 0) {
+                        // Obtener las claves del primer objeto para crear encabezados de la tabla dinámicamente
+                        const keys = Object.keys(data[0]);
+                        const tableHead = document.querySelector('#viewsTable thead tr');
+                        tableHead.innerHTML = '';  // Limpiar el encabezado antes de cargar nuevos encabezados
+                        
+                        keys.forEach(key => {
+                            const th = document.createElement('th');
+                            th.textContent = key;
+                            tableHead.appendChild(th);
+                        });
+        
+                        // Rellenar la tabla con los datos de la vista
+                        data.forEach(row => {
+                            const tableRow = document.createElement('tr');
+                            keys.forEach(key => {
+                                const td = document.createElement('td');
+                                td.textContent = row[key];
+                                tableRow.appendChild(td);
+                            });
+                            tableBody.appendChild(tableRow);
+                        });
+                    } else {
+                        // Si no hay datos, mostrar un mensaje
+                        const noDataMessage = document.createElement('tr');
+                        const noDataCell = document.createElement('td');
+                        noDataCell.textContent = 'No hay datos disponibles para esta vista.';
+                        noDataCell.colSpan = 3; // Asumimos que podría tener al menos 3 columnas
+                        noDataMessage.appendChild(noDataCell);
+                        tableBody.appendChild(noDataMessage);
+                    }
+                })
+                .catch(error => console.error('Error al cargar los datos de la vista:', error));
+        }
+
+    </script>
+</body>
+</html>
