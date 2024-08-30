@@ -1,67 +1,89 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Consulta PostgreSQL</title>
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeastComplay</title>
+    <link rel="stylesheet" href="css/style-general.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://kit.fontawesome.com/62d207089a.js" crossorigin="anonymous"></script>
+    
 </head>
 <body>
-  <h1>Datos de PostgreSQL</h1>
-  <ul id="data-list"></ul>
+    <!-- Encabezado -->
+    <header class="header">
+        <div class="menu-icon" id="menu-icon">
+            &#9776;
+        </div>
+        <div class="logo">
+            <a href="principal.html">BeastComplay</a>
+        </div>
+        <div class="header-right">
+            <a style="color: #4CAF50;" href="login.html">Iniciar Sesión</a>
+            <a style="color: #4CAF50;" href="#">Registrarse</a>
+        </div>
+    </header>
 
-  <h2>Actualizar Nombre del Cliente</h2>
-  <form id="update-form">
-    <label for="id_cliente">ID Cliente:</label>
-    <input type="text" id="id_cliente" name="id_cliente" required>
-    <label for="nuevo_nombre">Nuevo Nombre:</label>
-    <input type="text" id="nuevo_nombre" name="nuevo_nombre" required>
-    <button type="submit">Actualizar</button>
-  </form>
+    <!-- Menú lateral desplegable -->
+    <div class="side-menu" id="side-menu">
+        <a href="principal.html">Inicio</a>
+        <a href="#">Nosotros</a>
+        <a href="#">Servicios</a>
+        <a href="#">Contacto</a>
+    </div>
 
-  <script>
-    async function fetchData() {
-      try {
-        const response = await fetch('/api/data');
-        const data = await response.json();
-        const list = document.getElementById('data-list');
-        data.forEach(item => {
-          const listItem = document.createElement('li');
-          listItem.textContent = JSON.stringify(item);
-          list.appendChild(listItem);
-        });
-      } catch (error) {
-        console.error('Error al obtener datos:', error);
-      }
-    }
+    <!-- Sección principal -->
+    <main>
+        <section class="intro">
+            <h2>Explora nuestro sitio web y descubre los secretos de la piscicultura. Desde la selección de especies hasta la gestión de estanques, tenemos todo lo que necesitas para iniciar tu propio proyecto.</h2>
+            <img class="imagen-efecto"  src="https://media.istockphoto.com/id/1405392637/es/foto/truchas-pescando-con-coopnet-pescado-capturado-en-una-red-de-pesca.jpg?s=2048x2048&w=is&k=20&c=Z8faXhxKn9PgruQw3gnJ_FeRMuashCpuVXNaEHjMfvE=" alt="Piscicultura">
+        </section>
+        
 
-    document.getElementById('update-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const id_cliente = document.getElementById('id_cliente').value;
-      const nuevo_nombre = document.getElementById('nuevo_nombre').value;
+        <section class="features">
+            <div class="feature-box">
+                <p>Bienvenido a BeastComplay, tu aliado en la piscicultura.</p>
+            </div>
+            <div class="feature-box">
+                <p>Aumenta tu producción, mejora la calidad de tus peces y reduce tus costos operativos.</p>
+            </div>
+            <div class="feature-box">
+                <p>Contáctanos hoy mismo para una consulta gratuita.</p>
+            </div>
+        </section>
+        <h2 style="color: #4CAF50;">Análisis de ventas que se realizaron en el año</h2>
+        <section class="intro">
+           
+            <p>¡Bienvenido a BeastComplay! Somos tu socio estratégico en la producción de trucha en los Andes. Ofrecemos sistemas de cultivo adaptados a la altura, asesoramiento técnico especializado y una amplia variedad de alevines. ¡Contáctanos y descubre cómo impulsar tu negocio!</p>
+           
+            <img style="height: 400px;" src="https://www.jmp.com/es_co/statistics-knowledge-portal/exploratory-data-analysis/line-graph/_jcr_content/par/styledcontainer_2069/par/image_1146119716.img.png/1597773216360.png" alt="">
+            <!-- <button class="btn-ver-grafica">Ver gráfica</button> -->
+        </section>
+    </main>
 
-      try {
-        const response = await fetch('/api/update', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ id_cliente, nuevo_nombre })
-        });
-        if (response.ok) {
-          const result = await response.json();
-          alert('Cliente actualizado: ' + JSON.stringify(result));
-          fetchData(); // Actualiza la lista después de la actualización
-        } else {
-          const errorText = await response.text();
-          alert('Error: ' + errorText);
-        }
-      } catch (error) {
-        console.error('Error al actualizar:', error);
-      }
-    });
+    <footer class="footer">
+        <div class="footer-section logo-section">
+            <img style="width: 150px; height: 150px;"  src="img/pesca_logo-removebg-preview.png" alt="Logo de BeastComplay">
+        </div>
+        <div class="footer-section info-section">
+            <p>Dirección: Quito, Ecuador</p>
+            <p>Teléfono: 0939429432</p>
+            <p>Correo: beastcomplay@gmail.com</p>
+            <div class="social-media">
+                <i class="fa-brands fa-facebook"></i>
+                <i class="fa-brands fa-youtube"></i>
+                <i class="fa-brands fa-square-x-twitter"></i>
+            </div>
+        </div>
+        <div class="footer-politicas">
+            <a  href="#">Políticas de Privacidad</a>
+            
+            <a  href="#">Términos de Servicio</a>
+            <a href="#">Ayuda</a>
+        </div>
+    </footer>
+    
 
-    fetchData();
-  </script>
+    <script src="javascript/script-general.js"></script>
 </body>
 </html>
