@@ -21,6 +21,7 @@ app.get('/api/data', async (req, res) => {
     const result = await pool.query('SELECT * FROM comercializacion.cliente');
     res.json(result.rows);
   } catch (err) {
+    
     console.error(err);
     res.status(500).send('Error en la consulta');
   }
