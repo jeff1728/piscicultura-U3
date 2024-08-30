@@ -101,6 +101,25 @@ app.post('/api/pedidos', express.json(), async (req, res) => {
   }
 });
 
+// Endpoint para obtener los datos de una vista específica de PostgreSQL
+app.get('/api/views', async (req, res) => {
+    const viewType = req.query.type;  // Nombre de la vista que queremos consultar
+    const schema = req.query.schema;  // Esquema al que pertenece la vista
+
+    // Construimos la consulta para seleccionar todos los datos de la vista seleccionada
+    const query = `
+        SELECT * FROM ${schema}.${viewType}
+    `;
+
+    try {
+        // Ejecutamos la consulta en la base de datos PostgreSQL
+        const result = await pool.query(query);
+        res.json(result.rows);  // Enviamos los datos obtenidos al cliente
+    } catch (err) {
+        console.error('Error ejecutando la consulta:', err);
+        res.status(500).send('Error al obtener los datos de la vista.');
+    }
+}); 
 
 
 // Iniciar el servidor
