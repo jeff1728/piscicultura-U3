@@ -14,6 +14,68 @@ const pool = new Pool({
 });
 // Configuración para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.post('/login', (req, res) => {
+  const { username, password } = req.body;
+
+  const client = new Client({
+      host: '192.168.2.134',
+      port: 5432,
+      user: username,
+      password: password,
+      database: 'pisciculturaU2'
+  });
+
+  client.connect(err => {
+      if (err) {
+          console.error('Connection error', err.stack);
+          res.status(401).send('Invalid credentials');
+      } else {
+          client.query(
+              `SELECT rolname FROM pg_user 
+              JOIN pg_auth_members ON (pg_user.usesysid=pg_auth_members.member) 
+              JOIN pg_roles ON (pg_roles.oid=pg_auth_members.roleid) 
+              WHERE pg_user.usename=$1`, 
+              [username], 
+              (err, result) => {
+                  if (err) {
+                      console.error('Query error', err.stack);
+                      res.status(500).send('Error fetching user roles');
+                  } else {
+                      const roles = result.rows.map(row => row.rolname);
+
+                      if (roles.includes('admin_cosecha')) {
+                          res.redirect('/admin-cosecha');
+                      } else if (roles.includes('admin_comercializacion')) {
+                          res.redirect('/admin-comercializacion');
+                      } else {
+                          res.redirect('/general');
+                      }
+                  }
+                  client.end();
+              }
+          );
+      }
+  });
+});
+
+// Rutas para servir las páginas
+app.get('/admin-cosecha', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'peces.html'));
+});
+
+app.get('/admin-comercializacion', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'clientes.html'));
+});
+
+app.get('/general', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'administrador-vistas.html'));
+});
+
+app.get('/clientes', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Ruta para obtener datos de la base de datos
 app.get('/api/data', async (req, res) => {
@@ -21,7 +83,7 @@ app.get('/api/data', async (req, res) => {
     const result = await pool.query('SELECT * FROM comercializacion.cliente');
     res.json(result.rows);
   } catch (err) {
-    
+
     console.error(err);
     res.status(500).send('Error en la consulta');
   }
