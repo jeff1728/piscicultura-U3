@@ -1,280 +1,164 @@
 /* Estilos generales */
-
-
 body {
     font-family: Arial, sans-serif;
     margin: 0; 
     padding: 0;
     color: #0c0b0b;
-    font-size: 20px;
-}
-input[type="text"] {
-    padding: 8px;
-    margin-bottom: 10px;
-    width: 100%;
-    max-width: 300px;
+    font-size: 16px; /* Ajuste del tamaño de fuente */
+    line-height: 1.6; /* Mejora la legibilidad */
+    background-color: #f4f4f4; /* Color de fondo ligeramente gris para mejor contraste */
 }
 
+/* Estilos de formularios */
+input[type="text"], input[type="date"], input[type="number"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+    max-width: 400px; /* Aumentar el ancho máximo para mejorar la usabilidad */
+    border: 1px solid #ddd; /* Agregar borde para mejor definición */
+    border-radius: 5px;
+    box-sizing: border-box; /* Incluye el padding y el borde en el ancho total */
+}
+
+/* Listas */
 ul {
     list-style-type: none;
     padding: 0;
 }
+
 li {
     background: #4caf77;
-    margin: 5px 0;
-    padding: 10px;
-    border-radius: 5px;
-    margin-left: 300px;
-    margin-right: 300px;
+    margin: 10px auto; /* Centra la lista */
+    padding: 15px;
+    border-radius: 8px;
     color: #fff;
+    width: 90%; /* Ajustar el ancho para que no sea demasiado ancho en pantallas grandes */
+    max-width: 800px; /* Añadir límite máximo de ancho */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadir sombra para un efecto elevado */
 }
 
-.image-container {
-    position: relative;
-  }
-  
-  .text-over-image {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #ffffff;
-    font-size: 44px;
-    font-weight: bold;
-    background-color: rgba(0, 0, 0, 0); /* Opacidad de un color negro */
-    padding: 10px;
-  }
+/* Encabezado */
 .header {
-    /* background-color: #2b8a3e; */
     background: linear-gradient(to right, #fbfffb, #ffffff);
     color: #86c588;
-    padding: 15px;
+    padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: relative;
+    border-bottom: 1px solid #ddd; /* Añadir borde inferior para separación */
 }
 
 .menu-icon {
-    font-size: 24px;
+    font-size: 28px; /* Ajustar tamaño del icono del menú */
     cursor: pointer;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-}
-.logo a{
-    font-size: 28px;
+.logo a {
+    font-size: 30px; /* Aumentar tamaño del texto del logo */
     font-weight: bold;
     text-decoration: none;
     color: #3ba355;
-
 }
-
 
 .header-right a {
-    color: white;
+    color: #4CAF50;
     margin-left: 20px;
     text-decoration: none;
+    font-size: 16px;
 }
 
+/* Menú lateral */
 .side-menu {
     display: none;
-    position: absolute;
-    /* background-color: #2b8a3e; */
+    position: fixed; /* Cambiar a posición fija para que siempre esté visible en el lado */
     background: linear-gradient(190deg, #64ce68, #559457);
     top: 60px;
-    width: 100%;
+    width: 250px;
+    height: 100%;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 6px rgba(0, 0, 0, 0.1);
     animation: slideDown 0.4s ease-in-out;
     z-index: 10;
-}
-
-@keyframes slideDown {
-    from {
-        transform: translateY(-20%);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+    transform: translateX(-100%);
 }
 
 .side-menu a {
-    display: inline-block; /* Colocar los elementos en horizontal */
-    padding: 10px 20px;
+    display: block; /* Mostrar cada enlace en una nueva línea */
+    padding: 15px;
     color: white;
     text-decoration: none;
+    font-size: 18px;
 }
 
 .side-menu a:hover {
     background-color: #26733a;
 }
 
-main.dimmed {
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.intro {
-    margin-left: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background:white;
-    color: #26733a;
-}
-
-.intro h2 {
-    flex: 1;
-    margin-right: 20px;
-    text-align: left;
-    color: #4caf50;
-}
-
-
-
-.imagen-efecto{
-    height: 500px;
-    /* width: 700px; */
-    
-    margin: 0 auto;
-    mask: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-    -webkit-mask: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1));
-  
-
-}
-
-
-
-
-.features {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    /* background-color: #2b8a3e; */
-    
-    background: linear-gradient(to right, #5f9962, #26733a);
-    padding: 20px 10px;
-    gap: 20px; /* Añadir espacio entre los cuadros */
-    height: 500px;
-}
-
-.feature-box {
-    background-color: transparent;
-    border: 2px solid white;
+/* Estilos del formulario */
+form {
+    background: #ffffff;
     padding: 20px;
-    color: white;
-    text-align: center;
-    width: 500px;
-    /* flex: 1; */
-    transition: all 0.3s ease;
-    margin: 0 10px; /* Añadir margen a los lados de cada cuadro */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 20px auto;
 }
 
-.feature-box:hover {
-    border-color: #fff;
-    transform: scale(1.05);
-}
-
-.feature-box p::before,
-.feature-box p::after {
-    content: '';
-    /* display: block; */
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease;
-    width: 0;
-}
-
-.feature-box p::before,
-.feature-box p::after {
-    content: '';
+form label {
     display: block;
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease;
-    width: 0;
+    margin-bottom: 8px;
+    font-weight: bold;
 }
 
-.feature-box p::before {
-    margin-bottom: 10px;
-}
-
-.feature-box p::after {
-    margin-top: 10px;
-}
-
-.analysis {
-    padding: 20px;
-    text-align: center;
-}
-
-.btn-ver-grafica {
-    background-color: #2b8a3e;
+form button {
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
+    padding: 12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    width: 100%;
+    font-size: 18px;
 }
 
-.btn-ver-grafica:hover {
-    background-color: #26733a;
+form button:hover {
+    background-color: #45a049;
 }
 
+/* Listas de clientes y pedidos */
+#clientes-list, #pedidos-list {
+    max-height: 300px;
+    overflow-y: auto; /* Hacer que la lista sea desplazable verticalmente si es necesario */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    background: #ffffff;
+}
+
+/* Footer */
 .footer {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
     background-color: #26733a;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 14px; /* Ajuste del tamaño de fuente para el pie de página */
+    border-top: 1px solid #ddd; /* Añadir borde superior para separación */
 }
-
-.footer-content img {
-    width: 50px;
-    margin-bottom: 10px;
-}
-
-.footer p {
-    margin: 5px 0;
-}
-
-.footer .social-media img {
-    width: 24px;
-    margin: 0 10px;
-}
-
-.footer-links a {
-    color: #ffffff;
-    margin: 0 10px;
-    text-decoration: none;
-}
-
-.footer .social-media img {
-    width: 24px;
-    margin: 0 10px;
-}
-
 
 .footer-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.logo-section {
     flex: 1;
+    margin: 0 10px;
 }
 
-.info-section {
-    flex: 2;
-    text-align: left;
+.logo-section img {
+    max-width: 150px; /* Asegurar que la imagen no sea demasiado grande */
+}
+
+.info-section p {
+    margin: 5px 0;
 }
 
 .social-media {
@@ -283,11 +167,11 @@ main.dimmed {
     gap: 15px;
 }
 
-.social-media img {
-    width: 24px;
-    height: 24px;
+.social-media i {
+    font-size: 24px; /* Tamaño de iconos sociales */
 }
 
+/* Responsive Design */
 @media only screen and (max-width: 768px) {
     .footer {
         flex-direction: column;
@@ -298,50 +182,22 @@ main.dimmed {
     .info-section {
         margin-top: 20px;
     }
+
+    .side-menu {
+        width: 100%;
+        top: 0;
+        height: 100vh;
+    }
 }
 
-.footer-politicas > a{
-    color: #fdfdfd;
-    text-decoration: none;
-    padding: 10px;
+/* Animaciones y transiciones */
+@keyframes slideDown {
+    from {
+        transform: translateY(-20%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
-
-.footer-politicas > a:hover{
-    color: #8fe68f;
-    /* text-decoration: none; */
-    
-}
-
-#side-menu {
-    transition: transform 0.5s; /* Animación de 0.5 segundos */
-    transform: translateX(-100%); /* Posición inicial fuera de la pantalla */
-  }
-  
-  #side-menu.animate {
-    transform: translateX(0); /* Posición final en la pantalla */
-  }
-
-
-  #clientes-list {
-    max-height: 200px;
-    overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
-  }
-
-  .collapsed {
-    max-height: 200px;
-  }
-
-  .expanded {
-    max-height: 1000px; /* Ajusta este valor según el tamaño esperado de la lista */
-  }
-
-  #toggle-button {
-    cursor: pointer;
-    background-color: #007BFF;
-    color: white;
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    margin-top: 10px;
-  }
